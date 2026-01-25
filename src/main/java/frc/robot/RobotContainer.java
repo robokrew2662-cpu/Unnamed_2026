@@ -9,9 +9,9 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
-
-//import static edu.wpi.first.units.Units.RPM;
+import static edu.wpi.first.units.Units.RPM;
 
 import swervelib.SwerveInputStream;
 //import edu.wpi.first.math.geometry.Rotation2d;
@@ -29,12 +29,13 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private IntakeSubsystem intake = new IntakeSubsystem();
   private SwerveSubsystem drivebase = new SwerveSubsystem();
   
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  //private final CommandXboxController m_driverController =
-      //new CommandXboxController(OperatorConstants.kOperatorControllerPort);
+  private final CommandXboxController m_driverController =
+      new CommandXboxController(OperatorConstants.kOperatorControllerPort);
 
   private final CommandJoystick m_driverjoystick =
       new CommandJoystick(OperatorConstants.kDriverControllerPort);
@@ -43,6 +44,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+    intake.setDefaultCommand(intake.set(0));
     drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
   }
 /* SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivetrain.getSwerveDrive(),
@@ -121,6 +123,11 @@ SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerv
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.m_driverController.a().whileTrue(m_exampleSubsystem.setVelocity(RPM.of(60)));
     //m_driverController.a().whileTrue(intake.setVelocity(RPM.of(60)));
+    m_driverController.a().toggleOnTrue(intake.setVelocity(RPM.of(60)));
+    m_driverController.b().whileTrue(intake.setVelocity(RPM.of(100)));
+    m_driverController.x().whileTrue(intake.set(0.3));
+    m_driverController.y().whileTrue(intake.set(-0.3));
+
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
