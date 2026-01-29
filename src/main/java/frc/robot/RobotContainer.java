@@ -64,8 +64,8 @@ SwerveInputStream driveAngularVelocity = SwerveInputStream.of(m_drivebase.getSwe
                                                             .scaleTranslation(0.8)
                                                             .allianceRelativeControl(true);
 
-  SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(m_driverjoystick::getX,
-                                                                                             m_driverjoystick::getY)
+SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(m_driverjoystick::getY,
+                                                                                            m_driverjoystick::getX)
                                                            .headingWhile(true);
 
 
