@@ -45,7 +45,7 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
     m_intake.setDefaultCommand(m_intake.set(0));
-    m_intake.setDefaultCommand(m_intake.setVelocity(RPM.of(0)));
+    //m_intake.setDefaultCommand(m_intake.setVelocity(RPM.of(0)));
     m_drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
   }
 /* SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivetrain.getSwerveDrive(),
@@ -124,7 +124,7 @@ SwerveInputStream driveAngularVelocity = SwerveInputStream.of(m_drivebase.getSwe
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.m_driverController.a().whileTrue(m_exampleSubsystem.setVelocity(RPM.of(60)));
     //m_driverController.a().whileTrue(intake.setVelocity(RPM.of(60)));
-    m_driverController.a().whileTrue(m_intake.setVelocity(RPM.of(60)));
+    m_driverController.a().whileTrue(m_intake.setVelocity(RPM.of(0)));
     m_driverController.b().whileTrue(m_intake.setVelocity(RPM.of(300)));
     m_driverController.x().whileTrue(m_intake.set(0.3));
     m_driverController.y().whileTrue(m_intake.set(-0.3));

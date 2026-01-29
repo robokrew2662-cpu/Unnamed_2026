@@ -17,6 +17,9 @@ import static edu.wpi.first.units.Units.Pounds;
 //import static edu.wpi.first.units.Units.Seconds;
 //import static edu.wpi.first.units.Units.Volts;
 import static edu.wpi.first.units.Units.RPM;
+import static edu.wpi.first.units.Units.Seconds;
+
+import java.util.function.Supplier;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
@@ -56,7 +59,9 @@ public class IntakeSubsystem extends SubsystemBase {
   // Motor properties to prevent over currenting.
   .withMotorInverted(false)
   .withIdleMode(MotorMode.COAST)
-  .withStatorCurrentLimit(Amps.of(40));
+  .withStatorCurrentLimit(Amps.of(40))
+  .withClosedLoopRampRate(Seconds.of(0.25))
+  .withOpenLoopRampRate(Seconds.of(0.25));
 
 
   private SparkMax spark = new SparkMax(2, MotorType.kBrushless);
@@ -70,7 +75,9 @@ public class IntakeSubsystem extends SubsystemBase {
   .withMass(Pounds.of(1))
   // Maximum speed of the shooter.
   .withUpperSoftLimit(RPM.of(1000))
-  // Telemetry name and verbosity for the arm.
+  .withLowerSoftLimit(RPM.of(0))
+  .withSoftLimit(RPM.of(-1000), RPM.of(1000))
+  // Telemetry name and verbosity for the intake.
   .withTelemetry("IntakeMech", TelemetryVerbosity.HIGH);
 
 
@@ -99,6 +106,10 @@ public class IntakeSubsystem extends SubsystemBase {
    * @return {@link edu.wpi.first.wpilibj2.command.RunCommand}
    */
   public Command set(double dutyCycle) {return flyWheelintake.set(dutyCycle);}
+
+  public Command setVelocity(Supplier<AngularVelocity> speed) {return flyWheelintake.setSpeed(speed);}
+
+  public Command setDutyCycle(Supplier<Double> dutyCycle) {return flyWheelintake.set(dutyCycle);}
 
   /** Creates a new ExampleSubsystem. */
   public IntakeSubsystem() {}
