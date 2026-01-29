@@ -29,8 +29,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private IntakeSubsystem intake = new IntakeSubsystem();
-  private SwerveSubsystem drivebase = new SwerveSubsystem();
+  private final IntakeSubsystem m_intake = new IntakeSubsystem();
+  private final SwerveSubsystem m_drivebase = new SwerveSubsystem();
   
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -44,8 +44,9 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
-    intake.setDefaultCommand(intake.set(0));
-    drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
+    m_intake.setDefaultCommand(m_intake.set(0));
+    m_intake.setDefaultCommand(m_intake.setVelocity(RPM.of(0)));
+    m_drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
   }
 /* SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivetrain.getSwerveDrive(),
                                                                 () -> driverXbox.getLeftY() * -1,
@@ -55,7 +56,7 @@ public class RobotContainer {
                                                             .scaleTranslation(0.8)
                                                             .allianceRelativeControl(true); */
                                                             
-SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
+SwerveInputStream driveAngularVelocity = SwerveInputStream.of(m_drivebase.getSwerveDrive(),
                                                                 () -> m_driverjoystick.getY() * -1,
                                                                 () -> m_driverjoystick.getX() * -1)
                                                             .withControllerRotationAxis(m_driverjoystick::getZ)
@@ -97,9 +98,9 @@ SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerv
                                                                                .translationHeadingOffset(Rotation2d.fromDegrees(
                                                                                    0))*/
   
-  Command driveFieldOrientedDirectAngle = drivebase.driveFieldOriented(driveDirectAngle);    
+  Command driveFieldOrientedDirectAngle = m_drivebase.driveFieldOriented(driveDirectAngle);    
 
-  Command driveFieldOrientedAngularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);  
+  Command driveFieldOrientedAngularVelocity = m_drivebase.driveFieldOriented(driveAngularVelocity);  
 
   //Command driveFieldOrientedDirectAngleKeyboard = drivebase.driveFieldOriented(driveDirectAngleKeyboard);
   
@@ -123,10 +124,10 @@ SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerv
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.m_driverController.a().whileTrue(m_exampleSubsystem.setVelocity(RPM.of(60)));
     //m_driverController.a().whileTrue(intake.setVelocity(RPM.of(60)));
-    m_driverController.a().toggleOnTrue(intake.setVelocity(RPM.of(60)));
-    m_driverController.b().whileTrue(intake.setVelocity(RPM.of(100)));
-    m_driverController.x().whileTrue(intake.set(0.3));
-    m_driverController.y().whileTrue(intake.set(-0.3));
+    m_driverController.a().whileTrue(m_intake.setVelocity(RPM.of(60)));
+    m_driverController.b().whileTrue(m_intake.setVelocity(RPM.of(300)));
+    m_driverController.x().whileTrue(m_intake.set(0.3));
+    m_driverController.y().whileTrue(m_intake.set(-0.3));
 
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
