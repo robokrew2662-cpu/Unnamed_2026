@@ -139,6 +139,6 @@ SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerH
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return m_drivebase.getAutonomousCommand("New Auto");
   }
 }
