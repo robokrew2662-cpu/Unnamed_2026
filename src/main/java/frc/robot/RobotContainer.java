@@ -13,9 +13,13 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 import static edu.wpi.first.units.Units.RPM;
 
+import com.pathplanner.lib.auto.NamedCommands;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import swervelib.SwerveInputStream;
 //import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -43,10 +47,12 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
+    DriverStation.silenceJoystickConnectionWarning(true);
     configureBindings();
     m_intake.setDefaultCommand(m_intake.set(0));
     //m_intake.setDefaultCommand(m_intake.setVelocity(RPM.of(0)));
     m_drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
+    NamedCommands.registerCommand("test", Commands.print("Hello world"));
   }
 /* SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivetrain.getSwerveDrive(),
                                                                 () -> driverXbox.getLeftY() * -1,
