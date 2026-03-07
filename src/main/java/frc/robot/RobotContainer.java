@@ -17,9 +17,13 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import swervelib.SwerveInputStream;
 //import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -36,6 +40,7 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final IntakeSubsystem m_intake = new IntakeSubsystem();
   private final SwerveSubsystem m_drivebase = new SwerveSubsystem();
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -50,13 +55,18 @@ public class RobotContainer {
     // Configure the trigger bindings
     DriverStation.silenceJoystickConnectionWarning(true);
     configureBindings();
-    m_intake.setDefaultCommand(m_intake.set(0));
+
     //m_intake.setDefaultCommand(m_intake.setVelocity(RPM.of(0)));
-    m_drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
+    
+    m_chooser.addOption("Test", new PathPlannerAuto("New Auto"));
+    Shuffleboard.getTab("Pre Match Auto Chooser").add(m_chooser).withSize(10, 10);
 
     
     NamedCommands.registerCommand("Turn On Intake", m_intake.set(0.75));
     NamedCommands.registerCommand("Stop Intake", m_intake.set(0.0));
+
+     m_intake.setDefaultCommand(m_intake.set(0));
+     m_drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
   }
 /* SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivetrain.getSwerveDrive(),
                                                                 () -> driverXbox.getLeftY() * -1,
@@ -147,8 +157,10 @@ SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerH
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+  public Command getAutonomousCommand() 
+  {
     // An example command will be run in autonomous
-    return m_drivebase.getAutonomousCommand("New Auto");
+    //return m_drivebase.getAutonomousCommand("New Auto");
+   return m_chooser.getSelected();
   }
 }
