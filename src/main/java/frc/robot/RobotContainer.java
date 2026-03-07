@@ -10,7 +10,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-
+import frc.robot.subsystems.OuttakeSubsystem;
 import static edu.wpi.first.units.Units.RPM;
 
 import com.pathplanner.lib.auto.NamedCommands;
@@ -39,6 +39,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final IntakeSubsystem m_intake = new IntakeSubsystem();
+  private final OuttakeSubsystem m_outtake = new OuttakeSubsystem();
   private final SwerveSubsystem m_drivebase = new SwerveSubsystem();
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -66,6 +67,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Stop Intake", m_intake.set(0.0));
 
      m_intake.setDefaultCommand(m_intake.set(0));
+     m_outtake.setDefaultCommand(m_outtake.DefaultFlywheels());
      m_drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
   }
 /* SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivetrain.getSwerveDrive(),

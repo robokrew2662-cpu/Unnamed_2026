@@ -146,6 +146,14 @@ public class OuttakeSubsystem extends SubsystemBase {
   public Command stopFlywheels() {
     return setFlywheelSpeeds(RPM.of(0), RPM.of(0));
   }
+  /**
+   * Stop both flywheels.
+   *
+   * @return Command to stop flywheels
+   */
+  public Command DefaultFlywheels() {
+    return setFlywheelSpeeds(RPM.of(0), RPM.of(0));
+  }
 
   /**
    * Check if both flywheels are near their target velocities.
