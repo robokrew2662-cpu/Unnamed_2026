@@ -13,7 +13,13 @@
         {
           "type": "named",
           "data": {
-            "name": "test"
+            "name": "Turn On Intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Intake"
           }
         }
       ]

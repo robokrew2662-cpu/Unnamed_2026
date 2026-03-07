@@ -14,15 +14,16 @@ import frc.robot.subsystems.IntakeSubsystem;
 import static edu.wpi.first.units.Units.RPM;
 
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import swervelib.SwerveInputStream;
 //import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -35,7 +36,7 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final IntakeSubsystem m_intake = new IntakeSubsystem();
   private final SwerveSubsystem m_drivebase = new SwerveSubsystem();
-  
+
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -52,7 +53,10 @@ public class RobotContainer {
     m_intake.setDefaultCommand(m_intake.set(0));
     //m_intake.setDefaultCommand(m_intake.setVelocity(RPM.of(0)));
     m_drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
-    NamedCommands.registerCommand("test", Commands.print("Hello world"));
+
+    
+    NamedCommands.registerCommand("Turn On Intake", m_intake.set(0.75));
+    NamedCommands.registerCommand("Stop Intake", m_intake.set(0.0));
   }
 /* SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivetrain.getSwerveDrive(),
                                                                 () -> driverXbox.getLeftY() * -1,
