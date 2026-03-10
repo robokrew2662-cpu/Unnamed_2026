@@ -11,6 +11,8 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.OuttakeSubsystem;
+import frc.robot.subsystems.PneumaticsSubsystem;
+
 import static edu.wpi.first.units.Units.RPM;
 
 import com.pathplanner.lib.auto.NamedCommands;
@@ -41,6 +43,7 @@ public class RobotContainer {
   private final IntakeSubsystem m_intake = new IntakeSubsystem();
   private final OuttakeSubsystem m_outtake = new OuttakeSubsystem();
   private final SwerveSubsystem m_drivebase = new SwerveSubsystem();
+  private final PneumaticsSubsystem m_pneumatics = new PneumaticsSubsystem();
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 
@@ -150,6 +153,7 @@ SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerH
     m_driverController.b().whileTrue(m_intake.setVelocity(RPM.of(300)));
     m_driverController.x().whileTrue(m_intake.set(0.3));
     m_driverController.y().whileTrue(m_intake.set(-0.3));
+    m_driverController.rightBumper().onTrue(m_pneumatics.openSlap());
 
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }

@@ -4,26 +4,25 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj2.command.Command;
 
 
-public class PneumaticsSubsystem extends SubsystemBase {
-  /** Creates a new ExampleSubsystem. */
-  public PneumaticsSubsystem() { 
-Solenoid IntakeSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, 0);
+public class PneumaticsSubsystem {
+  Solenoid IntakeSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, 3);
+  public Object openSlap;
 
-public void ExtendIntake()
+public Command openSlap()
 {
-    IntakeSolenoid.set(true); // TODO boolean may need to flipped to false get desired result
+  IntakeSolenoid.set(true);
+    return null;
 }
-
-
-public void RetractClaw()
+public Command closeSlap()
 {
-    IntakeSolenoid.set(false); // TODO boolean may need to flipped to true get desired result
+  IntakeSolenoid.set(false);
+  return null;
 }
 
-}
+
 }
